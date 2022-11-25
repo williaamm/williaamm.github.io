@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-      </div>
     <head>
-      <script>
-      var meow = new Audio(); 
-      meow.src = "meow.mp3"; 
-      </script>
       <link rel="stylesheet" href="styles.css">
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,23 +9,19 @@
         
         <h1>good website design</h1>
         <input type="image" src="car.png"/>
-        <button id="btn">ok...,,,</button>
-        <script type="text/javascript">
-          const audio = new Audio();
-          audio.src = "526067.mp3";
-        <!----
-        <img src="car.jpg" width="577" height="433" alt="meowww">
-        <img src="image0 (1).jpg" width="500" height="100" alt="lol get better internet">
-        
-        <p>I'm cute and welcome mreoww</p>
-        -->
+        <audio controls id="music">
+
     </head>
     <body>
-        <div id="app"></div>
-        <script type="module" src="/src/main.ts"></script>
-        <nav>
-          <ul>
-            <li><a href="#" onmousedown="meow.play()">helloe</a></li>
-          </ul>
+      <script>
+        function play() {
+          var audio = document.getElementById("audio");
+          audio.play();
+        }
+      </script>
+  
+      <input type="button" value="PLAY" onclick="play()">
+      <audio id="audio" src="526067.mp3"></audio>
+  
     </body>
       </html>
