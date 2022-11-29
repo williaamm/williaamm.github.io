@@ -25,49 +25,9 @@ body {
 }
 h1 {
   font-family: Comic Sans MS;
-  animation-name: textrainbow;
-  animation-duration: 5s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-@keyframes textrainbow {
-	0% {
-		background: #ee6055;
-	}
-	25% {
-		background: #60d394;
-	}
-	50% {
-		background: #aaf683;
-	}
-	75% {
-		background: #ffd97d;
-	}
-	100% {
-		background: #ff9b85;
-	}
+  color: pink;
 }
 p {
   font-family: Comic Sans MS;
-  animation-name: textrainbowtwo;
-  animation-duration: 5s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-@keyframes textrainbowtwo {
-	0% {
-		background: #ee6055;
-	}
-	25% {
-		background: #60d394;
-	}
-	50% {
-		background: #aaf683;
-	}
-	75% {
-		background: #ffd97d;
-	}
-	100% {
-		background: #ff9b85;
-	}
+  color: pink;
 }
