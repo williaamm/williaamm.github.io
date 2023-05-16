@@ -1,0 +1,107 @@
+h1 {
+    font-family: MADE TOMMY;
+    color: rgb(255, 255, 255);
+  }
+  p {
+    font-family: MADE TOMMY;
+    color: #ffffff;
+  }
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.popup{
+    background-color: #91c7B1;
+    width: 420px;
+    padding: 30px 40px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    border-radius: 8px;
+    font-family: "MADE TOMMY",sans-serif;
+    display: none; 
+    text-align: center;
+}
+.popup button{
+    display: block;
+    margin:  0 0 20px auto;
+    background-color: transparent;
+    font-size: 30px;
+    /* x col */
+    color: #b33951;
+/*
+    background: #ff7c92;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+        */
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.popup h2{
+  margin-top: -20px;
+}
+.popup p{
+    font-size: 14px;
+    /*
+    text-align: justify;
+    */
+    margin: 20px 0;
+    line-height: 25px;
+}
+a{
+    display: block;
+    width: 150px;
+    position: relative;
+    margin: 10px auto;
+    text-align: center;
+    /* button col */
+    background-color: #b33951;
+    border-radius: 20px;
+    /* text col */
+    color: #ffffff; 
+    text-decoration: none;
+    padding: 8px 0;
+}
+body {
+	background-color: grey;
+	text-align: center;
+}
+table {
+	border-collapse: collapse;
+}
+
+td,
+th {
+	border: 1px solid black;
+	padding: 3px;
+	text-align: center;
+}
+
+th {
+	font-weight: bold;
+	background-color: #e6e6e6;
+}
+.yearCalendar {
+	max-width: 600px;
+	margin: 0 auto;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	margin-bottom: 2rem;
+}
+
+.today {
+	border: 2px solid red;
+}
+
+.holyday {
+	color: red;
+}
+.month {
+	margin-top: 1rem;
+}
