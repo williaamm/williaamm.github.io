@@ -35,7 +35,7 @@ TO DO
 			function writeText() {
 				const input = document.getElementById("freeform").value;
 				const output = input.replace(/\n/g, "<br>");
-				document.getElementById("currentTask").textContent = output;
+				document.getElementById("currentTask").innerHTML = output;
 			}
 			</script>
 		</div>
@@ -72,7 +72,7 @@ TO DO
 	<input type="textarea" id="input-field">
 	<label for="input-field">and the task date:</label>
 	<input type="date" id="input-date">
-	<button type="submit" onclick="hideInput()">Submit</button>
+	<button type="submit" onclick="addToTask()" onclick="hideInput()" >Submit</button>
 </form>
 <script>
 	function showInput() {
@@ -82,9 +82,16 @@ TO DO
 	function hideInput() {
 		event.preventDefault();
 		document.getElementById("input-form").style.display = "none";
-		const addTask = document.getElementById("input-form").value;
-		const addTaskWithLB = addTask.replace(/\n/g, "<br>");
-		document.getElementById("taskTask").textContent = addTaskWithLB;
+	}
+	function addToTask() {
+		event.preventDefault();
+		const addTaskInput = document.getElementById("input-field").value;
+		const addTaskOutput = addTaskInput.replace(/\n/g, "<br>");
+		document.getElementById("currentTask").innerHTML += "<br>" + addTaskOutput;
+		const inputDate = document.getElementById("input-date").value;
+		const outputDate = inputDate.replace(/\n/g, "<br>");
+		document.getElementById("taskTask").innerHTML += "<br>" + outputDate;
+		document.getElementById("input-form").style.display = "none";
 	}
 </script>
 <p id="taskTask"></p>

@@ -1,12 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add to Paragraph Example</title>
+</head>
 <body>
-<textarea id="input-field"></textarea>
-<button onclick="retrieveInput()">Retrieve Text</button>
-<p id="output"></p>
-<script>
-    function retrieveInput() {
-        const input = document.getElementById("input-field").value;
-        const output = input.replace(/\n/g, "<br>");
-        document.getElementById("output").innerHTML = output;
-    }
-</script>
+	<textarea id="input-field"></textarea>
+	<button onclick="addToParagraph()">Add to Paragraph</button>
+	<p id="output"></p>
+	<script>
+		function addToParagraph() {
+			const input = document.getElementById("input-field").value;
+			const outputElement = document.getElementById("output");
+			outputElement.textContent += input;
+		}
+	</script>
 </body>
+</html>
