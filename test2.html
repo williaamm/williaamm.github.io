@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Text Retrieval Example</title>
-	<style>
-		textarea {
-			width: 300px;
-			height: 100px;
-		}
-	</style>
+	<title>Monthly Calendar</title>
 </head>
 <body>
-	<textarea id="input-field"></textarea>
-	<button onclick="retrieveInput()">Retrieve Text</button>
-	<p id="output"></p>
+	<div>
+		<button onclick="prevMonth()">&#8249;</button>
+		<h2 id="month-year"></h2>
+		<button onclick="nextMonth()">&#8250;</button>
+	</div>
+
 	<script>
-		function retrieveInput() {
-			const input = document.getElementById("input-field").value;
-			const output = input.replace(/\n/g, "<br>");
-			document.getElementById("output").innerHTML = output;
+		// Get current date and initialize the calendar
+		const currentDate = new Date();
+		let currentMonth = currentDate.getMonth();
+		let currentYear = currentDate.getFullYear();
+
+		updateMonthYear();
+
+		function updateMonthYear() {
+			// Set the month and year
+			const monthYearHeader = document.getElementById("month-year");
+			monthYearHeader.textContent = getMonthName(currentMonth) + " " + currentYear;
+		}
+
+		function prevMonth() {
+			currentMonth--;
+			if (currentMonth < 0) {
+				currentMonth = 11;
+				currentYear--;
+			}
+			updateMonthYear();
+		}
+
+		function nextMonth() {
+			currentMonth++;
+			if (currentMonth > 11) {
+				currentMonth = 0;
+				currentYear++;
+			}
+			updateMonthYear();
+		}
+
+		function getMonthName(month) {
+			const monthNames = [
+				"January", "February", "March", "April", "May", "June",
+				"July", "August", "September", "October", "November", "December"
+			];
+			return monthNames[month];
 		}
 	</script>
 </body>

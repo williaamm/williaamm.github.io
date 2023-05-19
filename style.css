@@ -99,3 +99,11 @@ textarea {
   border-radius: 5px;
   cursor: pointer;
 }
+
+/* other text stuff */
+#input-form {
+  font-family: MADE TOMMY;
+  color: #f18181;
+  font-size: larger;
+  }
+

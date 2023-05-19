@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Add to Paragraph Example</title>
-</head>
 <body>
-	<textarea id="input-field"></textarea>
-	<button onclick="addToParagraph()">Add to Paragraph</button>
-	<p id="output"></p>
-	<script>
-		function addToParagraph() {
-			const input = document.getElementById("input-field").value;
-			const outputElement = document.getElementById("output");
-			outputElement.textContent += input;
-		}
-	</script>
+    <p>Check out <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">freeCodeCamp</a>.</p>
+
+<script>
+    const currentDate = new Date();
+	let currentMonth = currentDate.getMonth();
+	let currentYear = currentDate.getFullYear();
+    const monthYearHeader = document.getElementById("month-year");
+				monthYearHeader.textContent = getMonthName(currentMonth) + " " + currentYear;
+</script>
+<p id="month-year"></p>
+<p>hi</p>
 </body>
-</html>

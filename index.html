@@ -9,7 +9,7 @@ TO DO
 - create new task on calendar
 - monthly and yearly view on calendar
 - change elements to % rather than px
-- make sure the text entered works with lines	
+- make sure the text entered works with lines
 -->
 <!DOCTYPE html>
 <html>
@@ -27,24 +27,46 @@ TO DO
 	<div class="popup">
 		<div class="popup-inner">
 			<h1>Welcome (back!)</h1>
-			<p>enter your key to load your previous save, or leave it empty to start a new calendar.</p>
+			<p>enter your key to load your previous save, or leave it empty to start a new calendar.
+			<br>
+			(you are not permitted to use the < or > symbols)
+			</p>
 			<textarea type="freeform" id="freeform" name="a" rows="4" max-width="20" min-width="20" cols="30" placeholder="here!!!!!!!!!!!!!!!!!!!"></textarea>
 			<p> </p>
+			<p id="popupValidation"></p>
 			<button onclick="writeText()" class="close-button">enter</button>
 			<script> //output text from textbox
+			//just in case a particular someone attempts to html inject into my textbox
+			const greaterThan = "<";
+			const lessThan = ">";
+			let securityValidation = 0;
+
 			function writeText() {
 				const input = document.getElementById("freeform").value;
+				if (input.includes(greaterThan)) {
+					document.getElementById("popupValidation").innerText = "you can't use the < or > symbols in your entries, sorry";
+					securityValidation = 0;
+				} else if (input.includes(lessThan)) {
+					document.getElementById("popupValidation").innerText = "you can't use the < or > symbols in your entries, sorry";
+					securityValidation = 0;
+				} else {
+					securityValidation = 1;
 				const output = input.replace(/\n/g, "<br>");
 				document.getElementById("currentTask").innerHTML = output;
-			}
+				}
+		}
 			</script>
 		</div>
 	</div>
 	<script> // closing button
 		const popup = document.querySelector('.popup');
 		const closeButton = document.querySelector('.close-button');
-
-		closeButton.addEventListener('click', () => {popup.style.display = 'none'});
+		if (securityValidation == 0) {
+			closeButton.addEventListener('click', () => {popup.style.display = 'none'});
+		}
+			//popup.style.display = 'block';
+		//closeButton.addEventListener('click', () => {popup.style.display = 'none'});
+		//}
 
 		//closeButton.addEventListener('click', () => {
 		//	popup.style.display = 'none';
@@ -54,8 +76,8 @@ TO DO
 <span style="font-size:64px" id="month"></span>
 <script>document.write(/\d{4}/.exec(Date())[0])</script>
 </h1>
-<button id="helpButton" onclick="window.location.href='help.html'">Help</button>
-<button id="settingsButton" onclick="window.location.href='settings.html'">settings</button>
+<button id="helpButton" onclick="window.open('help.html', '_blank')">Help</button>
+<button id="settingsButton" onclick="window.open('settings.html', '_blank')">settings</button>
 <script>
 	const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	const date = new Date();
@@ -63,40 +85,52 @@ TO DO
 	document.getElementById("month").textContent = currentMonth;
 </script>
 </h1>
-<body style="background-color:#6877aa;"></body>
+<body style="background-color:#3c4461;"></body> <!--#6877aa;-->
 <span style="font-size:16px" ></span><h2>my tasks:</h2>
 <p id="currentTask"></p>
-<button onclick="showInput()">Add new task</button>
+<button onclick="showInput()" class="close-button">Add new task</button>
 <form id="input-form">
 	<label for="input-field">enter your task:</label>
 	<input type="textarea" id="input-field">
 	<label for="input-field">and the task date:</label>
 	<input type="date" id="input-date">
-	<button type="submit" onclick="addToTask()" onclick="hideInput()" >Submit</button>
+	<br>
+	<label for="input-desc" placeholder="(optional)">description:</label>
+	<input type="text" id="input-desc">
+	<button type="submit" class="close-button" onclick="submitInput()" >Submit</button>
+	<br>
+	<p id="taskValidation"></p>
 </form>
+<p></p>
 <script>
 	function showInput() {
 		document.getElementById("input-form").style.display = "block";
+		
 	}
 	
-	function hideInput() {
+	function submitInput() {
 		event.preventDefault();
-		document.getElementById("input-form").style.display = "none";
-	}
-	function addToTask() {
-		event.preventDefault();
+
 		const addTaskInput = document.getElementById("input-field").value;
 		const addTaskOutput = addTaskInput.replace(/\n/g, "<br>");
-		document.getElementById("currentTask").innerHTML += "<br>" + addTaskOutput;
+		
 		const inputDate = document.getElementById("input-date").value;
 		const outputDate = inputDate.replace(/\n/g, "<br>");
-		document.getElementById("taskTask").innerHTML += "<br>" + outputDate;
-		document.getElementById("input-form").style.display = "none";
-	}
+		const descInput = document.getElementById("input-desc").value;
+		if (addTaskInput == "") {
+			document.getElementById("taskValidation").innerHTML = "you haven't filled in all of the boxes!!!";
+		} else if (addTaskInput == "") {
+			document.getElementById("taskValidation").innerHTML = "you haven't filled in all of the boxes!!!";
+		} else {
+			document.getElementById("currentTask").innerHTML += "<br>" + outputDate + " - " + addTaskOutput + "<br>" + "description: " + descInput;
+			document.getElementById("input-form").style.display = "none";
+			document.getElementById("taskValidation").innerHTML = "";
+		}
+		}
 </script>
-<p id="taskTask"></p>
 </body>
 
+<!--
 <link rel="stylesheet" href="cal.css">
 	<body>
 		<div class="month">
@@ -158,6 +192,6 @@ TO DO
 		  <li> </li>
 		  <li> </li>
 		</ul>
-				
+	-->
 </body>
 </html>
