@@ -91,7 +91,7 @@ TO DO
 <button onclick="showInput()" class="close-button">Add new task</button>
 <form id="input-form">
 	<label for="input-field">enter your task:</label>
-	<input type="textarea" id="input-field">
+	<input type="text" id="input-field">
 	<label for="input-field">and the task date:</label>
 	<input type="date" id="input-date">
 	<br>
@@ -119,12 +119,16 @@ TO DO
 		const descInput = document.getElementById("input-desc").value;
 		if (addTaskInput == "") {
 			document.getElementById("taskValidation").innerHTML = "you haven't filled in all of the boxes!!!";
-		} else if (addTaskInput == "") {
+		} else if (inputDate == "") {
 			document.getElementById("taskValidation").innerHTML = "you haven't filled in all of the boxes!!!";
 		} else {
+			if (descInput == "") {
+				document.getElementById("currentTask").innerHTML += "<br>" + outputDate + " - " + addTaskOutput;
+			} else {
 			document.getElementById("currentTask").innerHTML += "<br>" + outputDate + " - " + addTaskOutput + "<br>" + "description: " + descInput;
 			document.getElementById("input-form").style.display = "none";
 			document.getElementById("taskValidation").innerHTML = "";
+			}
 		}
 		}
 </script>
