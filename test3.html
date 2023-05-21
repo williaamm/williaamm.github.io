@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<body>
-    <p>Check out <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">freeCodeCamp</a>.</p>
-
+<input type="text" value="Hello World" id="myInput">
+<button onclick="myFunction()">Copy text</button>
 <script>
-    const currentDate = new Date();
-	let currentMonth = currentDate.getMonth();
-	let currentYear = currentDate.getFullYear();
-    const monthYearHeader = document.getElementById("month-year");
-				monthYearHeader.textContent = getMonthName(currentMonth) + " " + currentYear;
+    function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+}
 </script>
-<p id="month-year"></p>
-<p>hi</p>
-</body>

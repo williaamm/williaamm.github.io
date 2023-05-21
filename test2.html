@@ -2,35 +2,116 @@
 <html>
 <head>
 	<title>Monthly Calendar</title>
+	<style>
+		.container {
+			max-width: 300px;
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.calendar {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		.calendar th,
+		.calendar td {
+			padding: 5px;
+			border: 1px solid #ccc;
+		}
+
+		.calendar th {
+			background-color: #f2f2f2;
+		}
+
+		.month-year {
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+	</style>
 </head>
 <body>
-	<div>
-		<button onclick="prevMonth()">&#8249;</button>
-		<h2 id="month-year"></h2>
-		<button onclick="nextMonth()">&#8250;</button>
+	<div class="container">
+		<button onclick="previousMonth()">&lt;</button>
+		<span id="month-year" class="month-year"></span>
+		<button onclick="nextMonth()">&gt;</button>
+		<table id="calendar" class="calendar"></table>
 	</div>
 
 	<script>
-		// Get current date and initialize the calendar
+		const calendar = document.getElementById("calendar");
+		const monthYearLabel = document.getElementById("month-year");
 		const currentDate = new Date();
 		let currentMonth = currentDate.getMonth();
 		let currentYear = currentDate.getFullYear();
 
-		updateMonthYear();
+		renderCalendar(currentMonth, currentYear);
 
-		function updateMonthYear() {
-			// Set the month and year
-			const monthYearHeader = document.getElementById("month-year");
-			monthYearHeader.textContent = getMonthName(currentMonth) + " " + currentYear;
+		function renderCalendar(month, year) {
+			const monthNames = ["January", "February", "March", "April", "May", "June",
+			                    "July", "August", "September", "October", "November", "December"];
+			const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+			// Set the month and year label
+			monthYearLabel.textContent = monthNames[month] + " " + year;
+
+			// Clear previous calendar
+			calendar.innerHTML = "";
+
+			// Create the calendar header row with days of the week
+			const headerRow = document.createElement("tr");
+			for (let dayOfWeek of daysOfWeek) {
+				const th = document.createElement("th");
+				th.textContent = dayOfWeek;
+				headerRow.appendChild(th);
+			}
+			calendar.appendChild(headerRow);
+
+			// Get the first day of the month
+			const firstDay = new Date(year, month, 1);
+			const startingDayOfWeek = firstDay.getDay();
+
+			// Get the number of days in the month
+			const lastDay = new Date(year, month + 1, 0);
+			const totalDays = lastDay.getDate();
+
+			// Create the calendar cells
+			let date = 1;
+			for (let week = 0; week < 6; week++) {
+				const row = document.createElement("tr");
+
+				// Create cells for each day of the week
+				for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+					const cell = document.createElement("td");
+
+					if ((week === 0 && dayOfWeek < startingDayOfWeek) || date > totalDays) {
+						// Display empty cells before the first day of the month or after the last day
+						cell.textContent = "";
+					} else {
+						// Display the date
+						cell.textContent = date;
+						date++;
+					}
+
+					row.appendChild(cell);
+				}
+
+				calendar.appendChild(row);
+
+				// Stop creating cells if all days have been displayed
+				if (date > totalDays) {
+					break;
+				}
+			}
 		}
 
-		function prevMonth() {
+		function previousMonth() {
 			currentMonth--;
 			if (currentMonth < 0) {
 				currentMonth = 11;
 				currentYear--;
 			}
-			updateMonthYear();
+			renderCalendar(currentMonth, currentYear);
 		}
 
 		function nextMonth() {
@@ -39,15 +120,7 @@
 				currentMonth = 0;
 				currentYear++;
 			}
-			updateMonthYear();
-		}
-
-		function getMonthName(month) {
-			const monthNames = [
-				"January", "February", "March", "April", "May", "June",
-				"July", "August", "September", "October", "November", "December"
-			];
-			return monthNames[month];
+			renderCalendar(currentMonth, currentYear);
 		}
 	</script>
 </body>

@@ -22,6 +22,17 @@ TO DO
 	<script>
 	function hideBoxes() {
 		document.getElementById("input-form").style.display = "none";
+
+		document.getElementById("keyImport").style.display = "none";
+		document.getElementById("keyImportButton").style.display = "none";
+
+		window.addEventListener('load', checkScreenSize);
+		window.addEventListener('resize', checkScreenSize);
+		function checkScreenSize() {
+			if (window.innerWidth < 900) {
+				alert("elements may not load as intended on smaller screens, please resize your screen.");
+			}
+		}
 	}
 	</script>
 	<div class="popup">
@@ -73,35 +84,174 @@ TO DO
 		//});
 	</script>
 <h1>
-<span style="font-size:64px" id="month"></span>
-<script>document.write(/\d{4}/.exec(Date())[0])</script>
+	
+
+
+<!--<script>document.write(/\d{4}/.exec(Date())[0])</script>-->
 </h1>
 <button id="helpButton" onclick="window.open('help.html', '_blank')">Help</button>
 <button id="settingsButton" onclick="window.open('settings.html', '_blank')">settings</button>
+<!--menu - reset everything, change bg-->
+<button id="importButton" onclick="importKey()">import</button>
+<button id="exportButton" onclick="exportKey()">export</button>
+<textarea type="freeform" id="keyImport" name="a" rows="4" max-width="20" min-width="20" cols="30"></textarea>
+<button type="submitImport" class="close-button-two" id="keyImportButton" onclick="submitKey()" >Submit</button>
+
+<script>
+  function exportKey() {
+    var currentTaskElement = document.getElementById("currentTask");
+    var currentTaskText = currentTaskElement.innerHTML;
+
+	//stupid problems require stupid solutions
+    var textarea = document.createElement("textarea");
+    textarea.value = currentTaskText;
+    document.body.appendChild(textarea);
+
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+
+    // Remove the temporary textarea element
+    document.body.removeChild(textarea);
+
+    alert("Your key has been copied to the clipboard. Import it into the import box on another device to load your calendar.");
+  }
+	//copy currentTask to clipboard
+	//disp alert
+	function importKey() {
+		document.getElementById("keyImport").style.display = "block";
+		document.getElementById("keyImportButton").style.display = "block";
+	}
+
+	function submitKey() {
+		document.getElementById("keyImport").style.display = "none";
+		document.getElementById("keyImportButton").style.display = "none";
+		//disp alert of override
+		if (keyImport == "") {
+		} else {
+		const importOutput = document.getElementById("keyImport").value;
+		document.getElementById("currentTask").innerHTML = importOutput
+		}
+	}
+
+</script>
+
 <script>
 	const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	const date = new Date();
-	const currentMonth = monthNames[date.getMonth()];
-	document.getElementById("month").textContent = currentMonth;
+	const currentMonthHeader = monthNames[date.getMonth()];
+	document.getElementById("month").textContent = currentMonthHeader;
 </script>
+
 </h1>
+
 <body style="background-color:#3c4461;"></body> <!--#6877aa;-->
-<span style="font-size:16px" ></span><h2>my tasks:</h2>
-<p id="currentTask"></p>
-<button onclick="showInput()" class="close-button">Add new task</button>
-<form id="input-form">
-	<label for="input-field">enter your task:</label>
-	<input type="text" id="input-field">
-	<label for="input-field">and the task date:</label>
-	<input type="date" id="input-date">
-	<br>
-	<label for="input-desc" placeholder="(optional)">description:</label>
-	<input type="text" id="input-desc">
-	<button type="submit" class="close-button" onclick="submitInput()" >Submit</button>
-	<br>
-	<p id="taskValidation"></p>
-</form>
+
 <p></p>
+
+<div class="calendar">
+	<div class="calendar-header">
+		<button onclick="prevMonth()" class="back-button" id="monthButton">back</button>
+		<h1 id="month-year"></h1>
+		<button onclick="nextMonth()" class="forward-button" id="monthButton">forward</button>
+	</div>
+	<h1 style="font-size:64px" id="month-year"></h1>
+	<div class="calendar-title" id="calendar-title"></div>
+	<div class="days-of-week" id="days-of-week"></div>
+	<div class="calendar-body" id="calendar-body"></div>
+</div>
+
+<script>
+	// get current date
+	const currentDate = new Date();
+	let currentMonth = currentDate.getMonth();
+	let currentYear = currentDate.getFullYear();
+
+	updateCalendar();
+
+	function updateCalendar() {
+		const calendarBody = document.getElementById("calendar-body");
+		const weekDisplay = document.getElementById("days-of-week");
+		calendarBody.innerHTML = "";
+		const monthYearHeader = document.getElementById("month-year");
+			monthYearHeader.textContent = getMonthName(currentMonth) + " " + currentYear;
+		const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+		const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
+
+		for (let i = 0; i < firstDayIndex; i++) {
+			const emptyDay = document.createElement("div");
+			const dayOfWeek = document.createElement("dayOfWeek");
+			emptyDay.classList.add("calendar-day");
+			calendarBody.appendChild(emptyDay);
+		}
+
+		for (let day = 1; day <= daysInMonth; day++) {
+			const calendarDay = document.createElement("div");
+			calendarDay.classList.add("calendar-day");
+			calendarDay.textContent = day;
+			calendarBody.appendChild(calendarDay);
+		}
+	}
+	function placeDaysOfWeekAboveCalendar()
+	{
+		const calendarTitle = document.getElementById("calendar-title");
+		for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+			const dayOfWeekHeader = document.createElement("div");
+			dayOfWeekHeader.classList.add("calendar-day");
+			dayOfWeekHeader.textContent = daysOfWeek(dayOfWeek);
+			calendarTitle.appendChild(dayOfWeekHeader);
+		}
+	}
+
+	function prevMonth() {
+		currentMonth--;
+		if (currentMonth < 0) {
+			currentMonth = 11;
+			currentYear--;
+		}
+		updateCalendar();
+		
+	}
+
+	function nextMonth() {
+		currentMonth++;
+		if (currentMonth > 11) {
+			currentMonth = 0;
+			currentYear++;
+		}
+		updateCalendar();
+	}
+
+	function getMonthName(month) {
+		const monthNamesTwo = ["January", "February", "March", "April", "May", "June",	"July", "August", "September", "October", "November", "December"];
+		return monthNamesTwo[month];
+	}
+	//function daysOfWeek(dayOfWeek) {
+	//	const dayOfWeekNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+	//	return dayOfWeekNames[dayOfWeek];
+	//}
+</script>
+<div class="separateElements">
+	<span style="font-size:32px" id="bigText"></span><h2>my tasks:</h2>
+	<p id="currentTask"></p>
+	<button onclick="showInput()" class="close-button">Add new task</button>
+	<br> <p></p>
+	<form id="input-form">
+		<label for="input-field">enter your task:</label>
+		<input type="text" maxlength="50" id="input-field">
+		<br>
+		<label for="input-field">and the task date:</label>
+		<input type="date" id="input-date">
+		<br>
+		<label for="input-desc" placeholder="(optional)">description:</label>
+		<input type="text" maxlength="100" id="input-desc">
+		<button type="submit" class="close-button" onclick="submitInput()" >Submit</button>
+		<br>
+		<p id="taskValidation"></p>
+		<br>
+		<p></p>
+	</form>
+</div>
 <script>
 	function showInput() {
 		document.getElementById("input-form").style.display = "block";
@@ -124,78 +274,18 @@ TO DO
 		} else {
 			if (descInput == "") {
 				document.getElementById("currentTask").innerHTML += "<br>" + outputDate + " - " + addTaskOutput;
+				document.getElementById("input-form").style.display = "none";
+				document.getElementById("taskValidation").innerHTML = "";	
 			} else {
 			document.getElementById("currentTask").innerHTML += "<br>" + outputDate + " - " + addTaskOutput + "<br>" + "description: " + descInput;
 			document.getElementById("input-form").style.display = "none";
 			document.getElementById("taskValidation").innerHTML = "";
 			}
 		}
+		let calTransfer = document.getElementById("currentTask").value;
 		}
 </script>
-</body>
+<h2> Monthly Tasks</h2>
 
-<!--
-<link rel="stylesheet" href="cal.css">
-	<body>
-		<div class="month">
-		  <ul>
-			<li class="prev">&#10094;</li>
-			<li class="next">&#10095;</li>
-			<li>
-			  </span>
-			  (month)<br>
-			  <span style="font-size:18px"><script>document.write(/\d{4}/.exec(Date())[0])</script></span>
-			</li>
-		  </ul>
-		</div>
-		<ul class="weekdays">
-		  <li>mon</li>
-		  <li>tue</li>
-		  <li>wed</li>
-		  <li>thu</li>
-		  <li>fri</li>
-		  <li>sat</li>
-		  <li>sun</li>
-		</ul>
-		
-		<ul class="days">
-		  <li>1</li>
-		  <li>2</li>
-		  <li>3</li>
-		  <li>4</li>
-		  <li>5</li>
-		  <li>6</li>
-		  <li>7</li>
-		  <li>8</li>
-		  <li>9</li>
-		  <li><span class="active">10</span></li>
-		  <li>11</li>
-		  <li>12</li>
-		  <li>13</li>
-		  <li>14</li>
-		  <li>15</li>
-		  <li>16</li>
-		  <li>17</li>
-		  <li>18</li>
-		  <li>19</li>
-		  <li>20</li>
-		  <li>21</li>
-		  <li>22</li>
-		  <li>23</li>
-		  <li>24</li>
-		  <li>25</li>
-		  <li>26</li>
-		  <li>27</li>
-		  <li>28</li>
-		  <li>29</li>
-		  <li>30</li>
-		  <li>31</li>
-		  <li> </li>
-		  <li> </li>
-		  <li> </li>
-		  <li> </li>
-		  <li> </li>
-		</ul>
-	-->
 </body>
 </html>

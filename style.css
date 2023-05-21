@@ -47,6 +47,14 @@ popup styling
     cursor: pointer;
     margin-top: 20px;
 }
+.back-button, .forward-button {
+background-color: #f18181;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
 /* text area resizing */
 textarea {
     resize: none;
@@ -76,6 +84,51 @@ textarea {
   cursor: pointer;
 }
 
+#importButton {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  padding: 10px;
+  background-color: #f18181;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#exportButton {
+  position: fixed;
+  top: 50px;
+  right: 75px;
+  padding: 10px;
+  background-color: #f18181;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#keyImportButton {
+  position: fixed;
+  top: 190px;
+  right: 15px;
+  padding: 10px;
+  background-color: #f18181;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#keyImport {
+  position: fixed;
+  top: 100px;
+  right: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 #backButton {
   position: fixed;
   top: 10px;
@@ -86,6 +139,22 @@ textarea {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+#monthlyTasks {
+  position: fixed;
+  top: 100px;
+  right: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  }
+
+#bigText {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 10px;
 }
 
 #backToTop {
@@ -107,3 +176,92 @@ textarea {
   font-size: larger;
   }
 
+#month-year {
+  font-family: MADE TOMMY;
+  color: #f18181;
+  width: 90vh;
+  text-align: center;
+
+  }
+
+#next-month-button {
+  font-family: MADE TOMMY;
+  color: #f18181;
+  width: 90vh;
+  position: fixed;
+  top: 30%;
+  left: 85%;
+  margin-top: 20px;
+  text-align: center;
+  }
+
+#prev-month-button {
+  font-family: MADE TOMMY;
+  color: #f18181;
+  width: 90vh;
+  position: fixed;
+  top: 30%;
+  left: 65%;
+  margin-top: 20px;
+  text-align: center;
+  }
+
+/* calendar */
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.calendar-header h2 {
+  margin: 0;
+}
+
+.calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 50px;
+  text-align: center;
+  
+}
+
+.days-of-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 50px;
+  text-align: center;
+  
+}
+
+.calendar-title {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 50px;
+  
+}
+
+
+.calendar-day {
+  text-align: center;
+  font-size:larger;
+  font-family: MADE TOMMY;
+  color: #f18181;
+  padding: 10px;
+  border: 0px;
+
+}
+
+.separateElements {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 10px;
+}
